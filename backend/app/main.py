@@ -1,6 +1,6 @@
 from fastapi import FastAPI
-from app.recommender import recommend_movies
-from app.tmdb import fetch_movie_details
+from app.recommender_content import recommend_content
+from app.recommender_collaborative import recommend_collaborative
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -15,17 +15,28 @@ app.add_middleware(
 
 @app.get("/")
 def home():
-    return {"message":"Movie Recommender API"}
+    return {"message": "Movie Recommender API"}
 
 @app.get("/recommend")
-def recommend(movie:str):
-    recommendations = recommend_movies(movie)
+def recommend(
+    movie: str,
+    type: str = "content"
+):
+
+    if type == "collaborative":
+
+        recommendations = (
+            recommend_collaborative(movie)
+        )
+
+    else:
+
+        recommendations = (
+            recommend_content(movie)
+        )
+
     return {
-            "movie":movie,
-            "recommendation":recommendations
-        }
-
-@app.get("/movie")
-def movie(movie: str):
-
-    return fetch_movie_details(movie)
+        "movie": movie,
+        "type": type,
+        "recommendation": recommendations
+    }

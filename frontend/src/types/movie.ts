@@ -5,4 +5,5 @@ export interface Movie {
   overview: string | null;
   rating: number | null;
   release_date: string | null;
+  runtime: string | null;
 }

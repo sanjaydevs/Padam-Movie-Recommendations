@@ -10,6 +10,8 @@ import { useEffect } from "react";
 const backgrounds = [
   "/backgrounds/Interstellar.png",
   "/backgrounds/inception.png",
+  "/backgrounds/endgame.png",
+  "/backgrounds/django.png",
 ];
 
 
@@ -21,6 +23,10 @@ function App() {
   const [currentBg, setCurrentBg] = useState(0);
   const [fade, setFade] = useState(false);
 
+  useEffect(() => {
+    console.log(recommendations);
+  }, [recommendations]);
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setFade(true);

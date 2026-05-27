@@ -83,8 +83,22 @@ export default function MovieCard({
             <div className="w-[140px] flex-shrink-0">
                 {movieDetail.poster && (
                     <img
-                        src={movieDetail.poster}
-                        className=" w-full h-full object-cover object-top"
+                        src={movieDetail.poster || "/fallback-poster.png"}
+                        alt={movieDetail.title}
+
+                        onError={(e) => {
+                            const target = e.target as HTMLImageElement;
+
+                            target.onerror = null;
+
+                            target.src = "/fallback-poster.png";
+                        }}
+
+                        className="
+                            h-full
+                            w-full
+                            object-cover
+                        "
                     />
                 )}
             </div>
@@ -104,6 +118,11 @@ export default function MovieCard({
                     <span>
                         {movieDetail.release_date?.slice(0, 4)}
                     </span>
+                    {movieDetail.runtime && (
+                        <span>
+                            🕒 {movieDetail.runtime} min
+                        </span>
+                    )}
                     {/* Watch Time */}
                 </div>
 
