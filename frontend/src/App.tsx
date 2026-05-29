@@ -1,5 +1,4 @@
 import { useState } from "react";
-import SearchBar from "./components/SearchBar";
 import Hero from "./components/Hero.tsx";
 import MovieCard from "./components/MovieCard";
 import type { Movie } from "./types/movie.ts";

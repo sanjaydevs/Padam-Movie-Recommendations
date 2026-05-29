@@ -40,23 +40,6 @@ const featuredMovies = [
   },
 ];
 
-interface HeroProps {
-
-    movie: string;
-
-    setMovie: React.Dispatch<
-        React.SetStateAction<string>
-    >;
-
-    setRecommendations: React.Dispatch<
-        React.SetStateAction<Movie[]>
-    >;
-
-    setSelectedMovie: React.Dispatch<
-        React.SetStateAction<Movie | null>
-    >;
-}
-
 export default function Hero({
     movie,
     setMovie,

@@ -7,6 +7,10 @@ interface SearchBarProps {
     setRecommendations:React.Dispatch<React.SetStateAction<any[]>>;
 }
 
+const API_URL = import.meta.env.VITE_API_URL;
+
+console.log(API_URL);
+
 export default function SearchBar ({setRecommendations,movie,setMovie}:SearchBarProps){
     
     const [mode, setMode] = useState<"content" | "collaborative" | "hybrid">("content");
@@ -16,7 +20,7 @@ export default function SearchBar ({setRecommendations,movie,setMovie}:SearchBar
     const fetchData = async(value:string)=>{
         try {
             setLoading(true);
-            const response = await axios.get(`http://127.0.0.1:8000/recommend?movie=${value}&type=${mode}`)
+            const response = await axios.get(`${API_URL}/recommend?movie=${value}&type=${mode}`)
             setRecommendations(response.data.recommendation)
         } catch (error) {
             console.error(error)
