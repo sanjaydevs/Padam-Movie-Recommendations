@@ -3,69 +3,47 @@ import type { Movie } from "../types/movie";
 interface MovieCardProps {
     movieDetail: Movie;
     featured?: boolean;
+    onClick?: () => void;
 }
 
 export default function MovieCard({
     movieDetail,
-    featured = false
+    featured = false,
+    onClick
 }: MovieCardProps) {
 
     // FEATURED MOVIES
     if (featured) {
         return (
             <div
+                onClick={onClick}
                 className="rounded overflow-hidden bg-[#ECE9E4] flex flex-col hover:-translate-y-1 transition-all  duration-200"
             >
                 {movieDetail.poster && (
                     <img
                         src={movieDetail.poster}
-                        className="
-                            w-full
-                            h-[170px]
-                            object-cover
-                            object-top
-                            border-b-2
-                            border-zinc-900
-                        "
+                        className="w-full h-[170px] object-cover object-top border-b-2 border-zinc-900"
                     />
                 )}
 
                 <div className="p-4 flex flex-col flex-grow">
 
                     <h3
-                        className="
-                            font-['Bebas_Neue']
-                            text-2xl
-                            uppercase
-                            leading-none
-                        "
+                        className="font-['Bebas_Neue'] text-2xl uppercase leading-none"
                     >
                         {movieDetail.title}
                     </h3>
                     {movieDetail.rating && (
                         <div className="mt-4">
                             <span
-                                className="
-                                rounded
-                                    border-2
-                                    border-zinc-900
-                                    px-1
-                                    py-1
-                                    text-sm
-                                    font-semibold
-                                "
+                                className="rounded border-2 border-zinc-900 px-1 py-1 text-sm font-semibold"
                             >
                                 ⭐ {movieDetail.rating.toFixed(1)} / 10
                             </span>
                         </div>
                     )}
                     <p
-                        className="font-['Orbitron']
-                            mt-4
-                            text-xs
-                            leading-relaxed
-                            line-clamp-3
-                        "
+                        className="font-['Orbitron'] mt-4 text-xs leading-relaxed line-clamp-3"
                     >
                         {movieDetail.overview}
                     </p>
@@ -76,7 +54,7 @@ export default function MovieCard({
 
     // RECOMMENDATION MOVIES
     return (
-        <div
+        <div onClick={onClick}
             className="rounded w-[420px] h-[220px] border border-zinc-700 bg-[#0f1723] overflow-hidden flex hover:border-zinc-400 transition-all duration-200"
         >
             {/* Poster */}
@@ -88,17 +66,11 @@ export default function MovieCard({
 
                         onError={(e) => {
                             const target = e.target as HTMLImageElement;
-
                             target.onerror = null;
-
                             target.src = "/fallback-poster.png";
                         }}
 
-                        className="
-                            h-full
-                            w-full
-                            object-cover
-                        "
+                        className="h-full w-full object-cover"
                     />
                 )}
             </div>
@@ -106,12 +78,10 @@ export default function MovieCard({
             {/* Details */}
             <div className="flex-1 p-4 text-white">
 
-                {/* Title */}
                 <h3 className="font-['Bebas_Neue'] text-2xl uppercase leading-none">
                     {movieDetail.title}
                 </h3>
 
-                {/* Meta */}
                 <div
                     className="mt-1 flex items-center gap-3 text-xs uppercase tracking-wider text-zinc-400"
                 >
@@ -123,10 +93,8 @@ export default function MovieCard({
                             🕒 {movieDetail.runtime} min
                         </span>
                     )}
-                    {/* Watch Time */}
                 </div>
 
-                {/* Rating Badge */}
                 {movieDetail.rating && (
                     <div className="mt-2">
                         <span
@@ -137,7 +105,6 @@ export default function MovieCard({
                     </div>
                 )}
 
-                {/* Overview */}
                 <p
                     className="font-['Orbitron'] mt-2 text-sm leading-relaxed text-zinc-300 line-clamp-4"
                 >

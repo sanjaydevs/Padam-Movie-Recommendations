@@ -23,23 +23,18 @@ sparse_matrix = pickle.load(
     )
 )
 
-movie_user_matrix = pickle.load(
+movie_ids = pickle.load(
     open(
-        'app/artifacts/collab_based/movie_user_matrix.pkl',
-        'rb'
+        "app/artifacts/collab_based/movie_ids.pkl",
+        "rb"
     )
 )
-
 movie_id_to_index = pickle.load(
     open(
         'app/artifacts/collab_based/movie_id_to_index.pkl',
         'rb'
     )
 )
-
-# =========================================================
-# RECOMMEND FUNCTION
-# =========================================================
 
 def recommend_collaborative(movie_name):
 
@@ -87,7 +82,7 @@ def recommend_collaborative(movie_name):
         similar_movie_index = indices[0][i]
 
         similar_movie_id = (
-            movie_user_matrix.index[
+            movie_ids[
                 similar_movie_index
             ]
         )
@@ -102,9 +97,7 @@ def recommend_collaborative(movie_name):
 
         movie_data = movie_data.iloc[0]
 
-        # =====================================================
-        # POSTER LOGIC
-        # =====================================================
+        #Poster
 
         tmdb_data = fetch_tmdb_poster(
             movie_data.title
@@ -112,7 +105,7 @@ def recommend_collaborative(movie_name):
 
         poster_url = None
 
-        # First preference → live TMDB poster
+        #live TMDB poster
         if (
             tmdb_data
             and tmdb_data.get("poster")
@@ -120,7 +113,7 @@ def recommend_collaborative(movie_name):
 
             poster_url = tmdb_data["poster"]
 
-        # Fallback → local dataset poster
+        #local dataset poster
         elif (
             pd.notna(
                 movie_data['poster_path']

@@ -3,7 +3,6 @@ export default function Footer() {
 
         <footer className="w-[95%] mx-auto mt-10 mb-4">
 
-            {/* TOP SECTION */}
             <div className="flex items-center justify-between px-8 py-6">
 
                 {/* LEFT */}
@@ -22,9 +21,8 @@ export default function Footer() {
                 {/* RIGHT */}
                 <div className="flex flex-col items-end">
                     <div className="flex items-center gap-4">
-                    {/* GITHUB */}
                     <a
-                        href="https://github.com/YOUR_GITHUB"
+                        href="https://github.com/sanjaydevs/Padam---Movie-Recommendations"
                         target="_blank"
                         className="border border-white p-3 hover:bg-black hover:text-white transition"
                     >
@@ -44,7 +42,6 @@ export default function Footer() {
 
                     </a>
 
-                    {/* LINKEDIN */}
                     <a
                         href="https://www.linkedin.com/in/sanjay-s-74551a2ba/"
                         target="_blank"

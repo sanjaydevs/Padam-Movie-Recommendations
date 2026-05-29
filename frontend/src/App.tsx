@@ -6,11 +6,15 @@ import type { Movie } from "./types/movie.ts";
 import Header from "./components/Header.tsx";
 import Footer from "./components/Footer.tsx";
 import { useEffect } from "react";
+import MovieModal from "./components/MovieModal.tsx";
 
 const backgrounds = [
   "/backgrounds/Interstellar.png",
+  "/backgrounds/bladerunner.png",
   "/backgrounds/inception.png",
+  "/backgrounds/dune.png",
   "/backgrounds/endgame.png",
+  "/backgrounds/batman.jpg",
   "/backgrounds/django.png",
 ];
 
@@ -22,6 +26,8 @@ function App() {
 
   const [currentBg, setCurrentBg] = useState(0);
   const [fade, setFade] = useState(false);
+
+  const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
 
   useEffect(() => {
     console.log(recommendations);
@@ -37,21 +43,17 @@ function App() {
         );
         setFade(false);
       },400);
-    }, 7000);
+    }, 5000);
 
     return () => clearInterval(interval);
   }, []);
-
+  
   return (
     <div>
       <div className="fixed inset-0 z-[-1] bg-black" />
       <div
-        className={`
-          fixed inset-0 z-0
-          bg-cover bg-center bg-no-repeat
-          transition-opacity duration-400
-          ${fade ? "opacity-0" : "opacity-100"}
-        `}
+        className={`fixed inset-0 z-0 bg-cover bg-center bg-no-repeat transition-opacity duration-400
+          ${fade ? "opacity-0" : "opacity-100"}`}
         style={{
           backgroundImage: `url(${backgrounds[currentBg]})`,
         }}
@@ -71,6 +73,7 @@ function App() {
             movie={movie}
             setMovie={setMovie}
             setRecommendations={setRecommendations}
+            setSelectedMovie={setSelectedMovie}
         />
         {recommendations.length > 0 && (
           <div className="w-[95%] mx-auto mt-16">
@@ -87,11 +90,18 @@ function App() {
                 <MovieCard
                   key={index}
                   movieDetail={movie}
+                  onClick={() => setSelectedMovie(movie)}
                 />
               ))}
             </div>
           </div>
         )}
+        {selectedMovie && (
+          <MovieModal
+              movie={selectedMovie}
+              onClose={() => setSelectedMovie(null)}
+          />
+      )}
         </main>
         <Footer></Footer>
       </div>

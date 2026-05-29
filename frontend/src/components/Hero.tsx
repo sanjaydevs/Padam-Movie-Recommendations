@@ -1,25 +1,22 @@
 import SearchBar from "./SearchBar";
 import MovieCard from "./MovieCard";
 
-
-
-
 const featuredMovies = [
   {
     title: "Interstellar",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
     overview:
-      "A team of explorers travel through a wormhole in space in an attempt to ensure humanity's survival.",
+      "Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
     rating: 8.7,
     release_date: "2014-11-05",
   },
   {
-    title: "The Dark Knight",
+    title: "The Dark KnightThe Dark Knight",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
     overview:
-      "Batman faces the Joker, a criminal mastermind who plunges Gotham into chaos.",
+      "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
     rating: 9.0,
     release_date: "2008-07-18",
   },
@@ -28,7 +25,7 @@ const featuredMovies = [
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
     overview:
-      "A thief who steals corporate secrets through dream-sharing technology is given an impossible task.",
+      "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: inception, the implantation of another person's idea into a target's subconscious.",
     rating: 8.8,
     release_date: "2010-07-16",
   },
@@ -43,11 +40,30 @@ const featuredMovies = [
   },
 ];
 
+interface HeroProps {
+
+    movie: string;
+
+    setMovie: React.Dispatch<
+        React.SetStateAction<string>
+    >;
+
+    setRecommendations: React.Dispatch<
+        React.SetStateAction<Movie[]>
+    >;
+
+    setSelectedMovie: React.Dispatch<
+        React.SetStateAction<Movie | null>
+    >;
+}
+
 export default function Hero({
     movie,
     setMovie,
-    setRecommendations
+    setRecommendations,
+    setSelectedMovie
 }: any) {
+
 
     return (
         <section className="w-[95%] mx-auto mt-6">
@@ -56,7 +72,6 @@ export default function Hero({
 
                 {/* LEFT PANEL */}
                 <div className="w-[40%]">
-
                     <h1 className="pt-14 font-['Bebas_Neue'] text-6xl tracking-wide leading-[0.9] uppercase text-white">
                         FIND YOUR NEXT
                         <br />
@@ -82,7 +97,7 @@ export default function Hero({
                 <div className="flex-1">
                     <div className="flex items-center gap-4 mb-4">
                         <h2 className="font-['Bebas_Neue'] text-3xl tracking-wide text-white uppercase whitespace-nowrap">
-                            Featured Movies
+                            Start With
                         </h2>
 
                         <div className="h-px flex-1 bg-white/30" />
@@ -93,6 +108,9 @@ export default function Hero({
                                 key={index}
                                 movieDetail={movie}
                                 featured
+                                onClick={() =>
+                                    setSelectedMovie(movie)
+                                }
                             />
                         ))}
                     </div>

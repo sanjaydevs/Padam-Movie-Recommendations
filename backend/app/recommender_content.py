@@ -49,12 +49,12 @@ def recommend_content(movie):
 
         poster_url = None
 
-        # First preference → TMDB live poster
+        #TMDB live poster
         if tmdb_data and tmdb_data.get("poster"):
 
             poster_url = tmdb_data["poster"]
 
-        # Fallback → local dataset poster
+        #local dataset poster
         elif (
             pd.notna(movie_data.poster_path)
             and str(movie_data.poster_path).startswith("/")
@@ -93,10 +93,10 @@ def recommend_content(movie):
             ),
             
             "runtime": (
-              int(movie_data['runtime'])
-              if pd.notna(movie_data['runtime'])
-              else None
-          ),
+                int(movie_data['runtime'])
+                if pd.notna(movie_data['runtime'])
+                else None
+            ),
             
         })
 

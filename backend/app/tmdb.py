@@ -70,10 +70,8 @@ def fetch_tmdb_poster(movie_name):
 
             poster_path = movie.get("poster_path")
 
-            # Prefer exact title match
             if clean_title.lower() == title:
 
-                # Prefer exact year too
                 if (
                     year
                     and release_date.startswith(year)
@@ -86,7 +84,6 @@ def fetch_tmdb_poster(movie_name):
                 elif poster_path:
                     best_match = movie
 
-        # fallback to first valid poster result
         if not best_match:
 
             for movie in data["results"]:
