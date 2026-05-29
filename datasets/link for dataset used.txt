@@ -1,0 +1,3 @@
+https://www.kaggle.com/datasets/rounakbanik/the-movies-dataset
+
+Download the dataset and change the path in the notebooks before generating pkl files.
