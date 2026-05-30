@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.recommender_content import recommend_content
-from app.recommender_collaborative import recommend_collaborative
+# from app.recommender_collaborative import recommend_collaborative
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
