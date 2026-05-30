@@ -3,13 +3,13 @@ import pandas as pd
 from app.tmdb import fetch_tmdb_poster
 
 movies = None
-new_data = None
+titles = None
 model = None
 vectors = None
 
 
 def load_models():
-    global movies, new_data, model, vectors
+    global movies, titles, model, vectors
 
     if movies is None:
 
@@ -26,14 +26,14 @@ def load_models():
         )
         print("✓ movies.pkl loaded")
 
-        print("Loading new_data.pkl...")
-        new_data = pickle.load(
-            open(
-                "app/artifacts/content_based/new_data.pkl",
-                "rb"
-            )
+        print("Loading titles.pkl...")
+        titles = pickle.load(
+        open(
+            "app/artifacts/content_based/titles.pkl",
+            "rb"
         )
-        print("✓ new_data.pkl loaded")
+)
+        print("✓ titles.pkl loaded")
 
         print("Loading model.pkl...")
         model = pickle.load(
@@ -62,8 +62,8 @@ def recommend_content(movie):
     
     movie = movie.lower()
 
-    matches = new_data[
-        new_data['title']
+    matches = titles[
+        titles['title']
         .fillna('')
         .str.lower()
         .str.contains(movie)

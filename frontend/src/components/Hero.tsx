@@ -13,7 +13,7 @@ const featuredMovies = [
     runtime: 169
   },
   {
-    title: "The Dark KnightThe Dark Knight",
+    title: "The Dark Knight",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
     overview:
