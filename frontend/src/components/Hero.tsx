@@ -10,6 +10,7 @@ const featuredMovies = [
       "Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.",
     rating: 8.7,
     release_date: "2014-11-05",
+    runtime: 169
   },
   {
     title: "The Dark KnightThe Dark Knight",
@@ -19,6 +20,7 @@ const featuredMovies = [
       "Batman raises the stakes in his war on crime. With the help of Lt. Jim Gordon and District Attorney Harvey Dent, Batman sets out to dismantle the remaining criminal organizations that plague the streets. The partnership proves to be effective, but they soon find themselves prey to a reign of chaos unleashed by a rising criminal mastermind known to the terrified citizens of Gotham as the Joker.",
     rating: 9.0,
     release_date: "2008-07-18",
+    runtime: 152
   },
   {
     title: "Inception",
@@ -28,6 +30,7 @@ const featuredMovies = [
       "Cobb, a skilled thief who commits corporate espionage by infiltrating the subconscious of his targets is offered a chance to regain his old life as payment for a task considered to be impossible: inception, the implantation of another person's idea into a target's subconscious.",
     rating: 8.8,
     release_date: "2010-07-16",
+    runtime: 148
   },
   {
     title: "Parasite",
@@ -37,6 +40,7 @@ const featuredMovies = [
       "A poor family gradually infiltrates the lives of a wealthy household with unexpected consequences.",
     rating: 8.5,
     release_date: "2019-05-30",
+    runtime: 133
   },
 ];
 
