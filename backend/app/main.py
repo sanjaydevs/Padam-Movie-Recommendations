@@ -28,7 +28,7 @@ def recommend(
     #         recommend_collaborative(movie)
     #     )
 
-    else:
+    if type == "content":
         recommendations = (
             recommend_content(movie)
         )
