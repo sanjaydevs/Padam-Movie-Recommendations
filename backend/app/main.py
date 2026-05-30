@@ -23,10 +23,10 @@ def recommend(
     type: str = "content"
 ):
 
-    if type == "collaborative":
-        recommendations = (
-            recommend_collaborative(movie)
-        )
+    # if type == "collaborative":
+    #     recommendations = (
+    #         recommend_collaborative(movie)
+    #     )
 
     else:
         recommendations = (
