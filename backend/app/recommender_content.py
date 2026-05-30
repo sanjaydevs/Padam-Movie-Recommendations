@@ -2,23 +2,63 @@ import pickle
 import pandas as pd
 from app.tmdb import fetch_tmdb_poster
 
-movies = pickle.load(
-    open('app/artifacts/content_based/movies.pkl', 'rb')
-)
+movies = None
+new_data = None
+model = None
+vectors = None
 
-new_data = pickle.load(
-    open('app/artifacts/content_based/new_data.pkl', 'rb')
-)
 
-model = pickle.load(
-    open('app/artifacts/content_based/model.pkl', 'rb')
-)
+def load_models():
+    global movies, new_data, model, vectors
 
-vectors = pickle.load(
-    open('app/artifacts/content_based/vectors.pkl', 'rb')
-)
+    if movies is None:
+
+        print("=" * 50)
+        print("Starting content model loading...")
+        print("=" * 50)
+
+        print("Loading movies.pkl...")
+        movies = pickle.load(
+            open(
+                "app/artifacts/content_based/movies.pkl",
+                "rb"
+            )
+        )
+        print("✓ movies.pkl loaded")
+
+        print("Loading new_data.pkl...")
+        new_data = pickle.load(
+            open(
+                "app/artifacts/content_based/new_data.pkl",
+                "rb"
+            )
+        )
+        print("✓ new_data.pkl loaded")
+
+        print("Loading model.pkl...")
+        model = pickle.load(
+            open(
+                "app/artifacts/content_based/model.pkl",
+                "rb"
+            )
+        )
+        print("✓ model.pkl loaded")
+
+        print("Loading vectors.pkl...")
+        vectors = pickle.load(
+            open(
+                "app/artifacts/content_based/vectors.pkl",
+                "rb"
+            )
+        )
+        print("✓ vectors.pkl loaded")
+
+        print("=" * 50)
+        print("All content artifacts loaded successfully")
+        print("=" * 50)
 
 def recommend_content(movie):
+    load_models()
     
     movie = movie.lower()
 
