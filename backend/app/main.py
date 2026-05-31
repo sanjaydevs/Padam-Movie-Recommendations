@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from app.recommender_content import recommend_content
-# from app.recommender_collaborative import recommend_collaborative
+from app.recommender_collaborative import recommend_collaborative
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -23,10 +23,10 @@ def recommend(
     type: str = "content"
 ):
 
-    # if type == "collaborative":
-    #     recommendations = (
-    #         recommend_collaborative(movie)
-    #     )
+    if type == "collaborative":
+        recommendations = (
+            recommend_collaborative(movie)
+        )
 
     if type == "content":
         recommendations = (

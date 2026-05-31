@@ -1,194 +1,216 @@
-# import pickle
-# import pandas as pd
-# from app.tmdb import fetch_tmdb_poster
+import pickle
+import pandas as pd
+from app.tmdb import fetch_tmdb_poster
+from sklearn.neighbors import NearestNeighbors
 
-# movies = pickle.load(
-#     open(
-#         'app/artifacts/collab_based/collaborative_movies.pkl',
-#         'rb'
-#     )
-# )
+movies = None
+sparse_matrix = None
+model = None
+movie_ids = None
+movie_id_to_index = None
 
-# model = pickle.load(
-#     open(
-#         'app/artifacts/collab_based/collaborative_model.pkl',
-#         'rb'
-#     )
-# )
 
-# sparse_matrix = pickle.load(
-#     open(
-#         'app/artifacts/collab_based/collaborative_sparse.pkl',
-#         'rb'
-#     )
-# )
+def load_collab():
 
-# movie_ids = pickle.load(
-#     open(
-#         "app/artifacts/collab_based/movie_ids.pkl",
-#         "rb"
-#     )
-# )
-# movie_id_to_index = pickle.load(
-#     open(
-#         'app/artifacts/collab_based/movie_id_to_index.pkl',
-#         'rb'
-#     )
-# )
+    global movies
+    global sparse_matrix
+    global model
+    global movie_ids
+    global movie_id_to_index
 
-# def recommend_collaborative(movie_name):
+    if movies is None:
 
-#     matches = movies[
-#         movies['title']
-#         .fillna('')
-#         .str.lower()
-#         .str.contains(
-#             movie_name.lower()
-#         )
-#     ]
+        print("=" * 50)
+        print("Starting collaborative model loading...")
+        print("=" * 50)
 
-#     if matches.empty:
+        print("Loading collaborative_movies.pkl...")
+        movies = pickle.load(
+            open(
+                'app/artifacts/collab_based/collaborative_movies.pkl',
+                'rb'
+            )
+        )
+        print("✓ collaborative_movies.pkl loaded")
 
-#         print("Movie not found")
+        print("Loading collaborative_sparse.pkl...")
+        sparse_matrix = pickle.load(
+            open(
+                'app/artifacts/collab_based/collaborative_sparse.pkl',
+                'rb'
+            )
+        )
+        print("✓ collaborative_sparse.pkl loaded")
 
-#         return []
+        print("Building NearestNeighbors model...")
+        
+        model = NearestNeighbors(
+            metric="cosine",
+            algorithm="brute"
+        )
 
-#     movie_id = matches.iloc[0]['id']
+        model.fit(sparse_matrix)
+        print("✓ model built")
 
-#     print("TMDB Movie ID:", movie_id)
+        print("Loading movie_ids.pkl...")
+        movie_ids = pickle.load(
+            open(
+                'app/artifacts/collab_based/movie_ids.pkl',
+                'rb'
+            )
+        )
+        print("✓ movie_ids.pkl loaded")
 
-#     if movie_id not in movie_id_to_index:
+        print("Loading movie_id_to_index.pkl...")
+        movie_id_to_index = pickle.load(
+            open(
+                'app/artifacts/collab_based/movie_id_to_index.pkl',
+                'rb'
+            )
+        )
+        print("✓ movie_id_to_index.pkl loaded")
 
-#         print("Movie not present in collaborative matrix")
+        print("=" * 50)
+        print("All collaborative artifacts loaded successfully")
+        print("=" * 50)
 
-#         return []
+def recommend_collaborative(movie_name):
+    load_collab()
+    
+    matches = movies[
+        movies['title']
+        .fillna('')
+        .str.lower()
+        .str.contains(
+            movie_name.lower()
+        )
+    ]
 
-#     movie_index = movie_id_to_index[
-#         movie_id
-#     ]
+    if matches.empty:
 
-#     distances, indices = model.kneighbors(
-#         sparse_matrix[movie_index],
-#         n_neighbors=11
-#     )
+        print("Movie not found")
 
-#     recommendations = []
+        return []
 
-#     for i in range(
-#         1,
-#         len(indices[0])
-#     ):
+    movie_id = matches.iloc[0]['id']
 
-#         similar_movie_index = indices[0][i]
+    print("TMDB Movie ID:", movie_id)
 
-#         similar_movie_id = (
-#             movie_ids[
-#                 similar_movie_index
-#             ]
-#         )
+    if movie_id not in movie_id_to_index:
 
-#         movie_data = movies[
-#             movies['id']
-#             == similar_movie_id
-#         ]
+        print("Movie not present in collaborative matrix")
 
-#         if movie_data.empty:
-#             continue
+        return []
 
-#         movie_data = movie_data.iloc[0]
+    movie_index = movie_id_to_index[
+        movie_id
+    ]
 
-#         #Poster
+    distances, indices = model.kneighbors(
+        sparse_matrix[movie_index],
+        n_neighbors=11
+    )
 
-#         tmdb_data = fetch_tmdb_poster(
-#             movie_data.title
-#         )
+    recommendations = []
 
-#         poster_url = None
+    for i in range(
+        1,
+        len(indices[0])
+    ):
 
-#         #live TMDB poster
-#         if (
-#             tmdb_data
-#             and tmdb_data.get("poster")
-#         ):
+        similar_movie_index = indices[0][i]
 
-#             poster_url = tmdb_data["poster"]
+        similar_movie_id = movie_ids[
+          similar_movie_index
+      ]
 
-#         #local dataset poster
-#         elif (
-#             pd.notna(
-#                 movie_data['poster_path']
-#             )
-#             and str(
-#                 movie_data['poster_path']
-#             ).startswith("/")
-#         ):
+        movie_data = movies[
+            movies['id']
+            == similar_movie_id
+        ]
 
-#             poster_url = (
-#                 "https://image.tmdb.org/t/p/w500"
-#                 + movie_data[
-#                     'poster_path'
-#                 ]
-#             )
+        if movie_data.empty:
+            continue
 
-#         recommendations.append({
+        movie_data = movie_data.iloc[0]
 
-#             "id":
-#                 int(movie_data['id']),
+        poster_url = None
 
-#             "title":
-#                 movie_data['title'],
+        if (
+            pd.notna(
+                movie_data['poster_path']
+            )
+            and str(
+                movie_data['poster_path']
+            ).startswith("/")
+        ):
 
-#             "overview":
-#                 movie_data['overview'],
+            poster_url = (
+                "https://image.tmdb.org/t/p/w500"
+                + movie_data[
+                    'poster_path'
+                ]
+            )
 
-#             "poster":
-#                 poster_url,
+        recommendations.append({
 
-#             "rating":
-#                 (
-#                     round(
-#                         float(
-#                             movie_data[
-#                                 'vote_average'
-#                             ]
-#                         ),
-#                         1
-#                     )
-#                     if pd.notna(
-#                         movie_data[
-#                             'vote_average'
-#                         ]
-#                     )
-#                     else None
-#                 ),
+            "id":
+                int(movie_data['id']),
 
-#             "release_date":
-#                 movie_data[
-#                     'release_date'
-#                 ],
+            "title":
+                movie_data['title'],
 
-#             "runtime":
-#                 (
-#                     int(
-#                         movie_data[
-#                             'runtime'
-#                         ]
-#                     )
-#                     if pd.notna(
-#                         movie_data[
-#                             'runtime'
-#                         ]
-#                     )
-#                     else None
-#                 ),
+            "overview":
+                movie_data['overview'],
 
-#             "distance":
-#                 round(
-#                     float(
-#                         distances[0][i]
-#                     ),
-#                     3
-#                 )
-#         })
+            "poster":
+                poster_url,
 
-#     return recommendations
+            "rating":
+                (
+                    round(
+                        float(
+                            movie_data[
+                                'vote_average'
+                            ]
+                        ),
+                        1
+                    )
+                    if pd.notna(
+                        movie_data[
+                            'vote_average'
+                        ]
+                    )
+                    else None
+                ),
+
+            "release_date":
+                movie_data[
+                    'release_date'
+                ],
+
+            "runtime":
+                (
+                    int(
+                        movie_data[
+                            'runtime'
+                        ]
+                    )
+                    if pd.notna(
+                        movie_data[
+                            'runtime'
+                        ]
+                    )
+                    else None
+                ),
+
+            "distance":
+                round(
+                    float(
+                        distances[0][i]
+                    ),
+                    3
+                )
+        })
+
+    return recommendations
