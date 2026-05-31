@@ -3,6 +3,7 @@ import MovieCard from "./MovieCard";
 
 const featuredMovies = [
   {
+    id:1,
     title: "Interstellar",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/gEU2QniE6E77NI6lCU6MxlNBvIx.jpg",
@@ -13,6 +14,7 @@ const featuredMovies = [
     runtime: 169
   },
   {
+    id:2,
     title: "The Dark Knight",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/qJ2tW6WMUDux911r6m7haRef0WH.jpg",
@@ -23,6 +25,7 @@ const featuredMovies = [
     runtime: 152
   },
   {
+    id:3,
     title: "Inception",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/oYuLEt3zVCKq57qu2F8dT7NIa6f.jpg",
@@ -33,6 +36,7 @@ const featuredMovies = [
     runtime: 148
   },
   {
+    id:4,
     title: "Parasite",
     distance: 0,
     poster: "https://image.tmdb.org/t/p/w500/7IiTTgloJzvGI1TAYymCfbfl3vT.jpg",
