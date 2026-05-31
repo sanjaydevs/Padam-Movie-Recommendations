@@ -1,4 +1,5 @@
 export interface Movie {
+  id: number;
   title: string;
   distance: number;
   poster: string | null;

@@ -81,7 +81,7 @@ function App() {
             </div>
 
             <div className="flex flex-wrap gap-4 justify-center">
-              {recommendations.map((movie, index) => (
+              {recommendations.map((movie) => (
                 <MovieCard
                   key={movie.id}
                   movieDetail={movie}
