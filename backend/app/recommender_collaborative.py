@@ -136,20 +136,22 @@ def recommend_collaborative(movie_name):
 
         poster_url = None
 
-        if (
-            pd.notna(
-                movie_data['poster_path']
-            )
-            and str(
-                movie_data['poster_path']
-            ).startswith("/")
-        ):
+        tmdb_data = fetch_tmdb_poster(
+            movie_data['title']
+        )
 
+        poster_url = None
+
+        if tmdb_data and tmdb_data.get("poster"):
+            poster_url = tmdb_data["poster"]
+
+        elif (
+            pd.notna(movie_data['poster_path'])
+            and str(movie_data['poster_path']).startswith("/")
+        ):
             poster_url = (
                 "https://image.tmdb.org/t/p/w500"
-                + movie_data[
-                    'poster_path'
-                ]
+                + movie_data['poster_path']
             )
 
         recommendations.append({
