@@ -48,6 +48,7 @@ export default function Hero({
     movie,
     setMovie,
     setRecommendations,
+    setMessage,
     setSelectedMovie
 }: any) {
 

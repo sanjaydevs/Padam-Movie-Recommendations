@@ -70,7 +70,10 @@ def recommend_content(movie):
     ]
 
     if matches.empty:
-        return []
+        return {
+            "recommendation": [],
+            "message": "Movie not found"
+        }
 
     movie_index = matches.index[0]
 
@@ -140,4 +143,7 @@ def recommend_content(movie):
             
         })
 
-    return recommended_movies
+    return {
+        "recommendation": recommended_movies,
+        "message": None
+    }

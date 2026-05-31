@@ -15,13 +15,16 @@ export default function SearchBar ({setRecommendations,movie,setMovie}:SearchBar
     
     const [mode, setMode] = useState<"content" | "collaborative" | "hybrid">("content");
     const [loading, setLoading] = useState(false);
-
+    const [message,setMessage] = useState('');
 
     const fetchData = async(value:string)=>{
         try {
             setLoading(true);
             const response = await axios.get(`${API_URL}/recommend?movie=${value}&type=${mode}`)
             setRecommendations(response.data.recommendation)
+            setMessage(
+                response.data.message ?? ""
+            );
         } catch (error) {
             console.error(error)
         } finally {
@@ -42,6 +45,39 @@ export default function SearchBar ({setRecommendations,movie,setMovie}:SearchBar
         
         <div className="mx-auto h-[100px]">
             <div className="flex items-center gap-3">
+                {message && (
+                    <div className="mt-3">
+                        <p className="font-['Quicksand'] text-amber-200 text-sm">
+                            {message}
+                        </p>
+
+                        {mode === "collaborative" && (
+                            <button
+                                onClick={async () => {
+                                    setMessage("");
+                                    setMode("content");
+                                    setLoading(true);
+                                    try {
+                                        const response = await axios.get(
+                                            `${API_URL}/recommend?movie=${movie}&type=content`
+                                        );
+                                        setRecommendations(
+                                            response.data.recommendation
+                                        );
+                                        setMessage(
+                                            response.data.message ?? ""
+                                        );
+                                    } finally {
+                                        setLoading(false);
+                                    }
+                                }}
+                                className="mt-2 text-sm underline text-[#e8ddb5] cursor-pointer"
+                            >
+                                Try Content Engine
+                            </button>
+                        )}
+                    </div>
+                )}
                 <input
                 className="rounded font-['Quicksand'] w-[80%] h-[60px] p-5 border-2 border-black shadow-[3px_4px_0_#000000] bg-[#d7d3ce]"
                 placeholder="Enter Movie name to Search..."

@@ -27,10 +27,6 @@ function App() {
   const [fade, setFade] = useState(false);
 
   const [selectedMovie, setSelectedMovie] = useState<Movie | null>(null);
-
-  useEffect(() => {
-    console.log(recommendations);
-  }, [recommendations]);
   
   useEffect(() => {
     const interval = setInterval(() => {
@@ -87,7 +83,7 @@ function App() {
             <div className="flex flex-wrap gap-4 justify-center">
               {recommendations.map((movie, index) => (
                 <MovieCard
-                  key={index}
+                  key={movie.id}
                   movieDetail={movie}
                   onClick={() => setSelectedMovie(movie)}
                 />

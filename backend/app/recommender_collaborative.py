@@ -87,20 +87,23 @@ def recommend_collaborative(movie_name):
     ]
 
     if matches.empty:
-
-        print("Movie not found")
-
-        return []
+        return {
+            "recommendation": [],
+            "message": "Movie not found in collaborative dataset"
+        }
 
     movie_id = matches.iloc[0]['id']
 
     print("TMDB Movie ID:", movie_id)
 
     if movie_id not in movie_id_to_index:
-
-        print("Movie not present in collaborative matrix")
-
-        return []
+        return {
+            "recommendation": [],
+            "message": (
+                "This movie doesn't have enough rating "
+                "data for collaborative recommendations"
+            )
+        }
 
     movie_index = movie_id_to_index[
         movie_id
@@ -215,4 +218,7 @@ def recommend_collaborative(movie_name):
                 )
         })
 
-    return recommendations
+    return {
+        "recommendation": recommendations,
+        "message": None
+    }
