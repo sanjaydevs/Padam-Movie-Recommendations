@@ -88,7 +88,7 @@ To tune the model, change the parameters in the notebook, downlaod the new pickl
 
 ##  License
 
-This project is open source. See the repository for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
 
