@@ -91,10 +91,3 @@ To tune the model, change the parameters in the notebook, downlaod the new pickl
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 ---
-
-
-**Sanjay** — [@sanjaydevs](https://github.com/sanjaydevs)
-
----
-
-*Made with ❤️ and a love for movies.*
