@@ -12,7 +12,7 @@ export default function Footer() {
                         PADAM
                     </h1>
 
-                    <p className="font-['Quicksand'] mt-2 text-sm tracking-wide uppercase text-white">
+                    <p className="font-['Quicksand'] mt-2 text-xs tracking-wide uppercase text-white">
                         Built by Sanjay
                     </p>
 
@@ -61,7 +61,7 @@ export default function Footer() {
 
                     </a>
                     </div>
-                    <p className="mt-4 text-sm tracking-wide uppercase text-white">
+                    <p className="mt-4 text-xs tracking-wide uppercase text-white">
                         © 2026 Padam Recommendations
                     </p>
                 </div>
