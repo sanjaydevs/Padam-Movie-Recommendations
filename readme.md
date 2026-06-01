@@ -1,6 +1,7 @@
 #  Padam — Movie Recommendations
 
 > A content-based movie recommendation engine with a full-stack web interface, powered by machine learning.
+<img width="1919" height="877" alt="Screenshot 2026-06-01 190145" src="https://github.com/user-attachments/assets/5d8870e3-9430-408b-8d6a-080318607445" />
 
 [padam-movie-recommendations.vercel.app](https://padam-movie-recommendations.vercel.app)
 
